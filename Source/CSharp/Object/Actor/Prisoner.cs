@@ -52,11 +52,11 @@ public class Prisoner : KinematicBody2D
 
     private void OnClickAreaMouseEnter()
     {
-        GD.Print("Mouse Enter");
+        prisonerSelectionManager.PrisonerHoverStart(this);
     }
 
     private void OnClickAreaMouseExit()
     {
-        GD.Print("Mouse Exit");
+        prisonerSelectionManager.PrisonerHoverEnd(this);
     }
 }
