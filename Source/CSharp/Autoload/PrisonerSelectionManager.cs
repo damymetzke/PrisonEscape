@@ -23,6 +23,10 @@ public class PrisonerSelectionManager : Node
             {
                 SelectSinglePrisoner(HoveredPrisoners[0]);
             }
+            else
+            {
+                DeselectAllprisoners();
+            }
         }
     }
 
@@ -55,6 +59,15 @@ public class PrisonerSelectionManager : Node
 
         value.NotifySelect();
         SelectedPrisoners.Add(value);
+    }
+
+    private void DeselectAllprisoners()
+    {
+        foreach (Prisoner prisoner in SelectedPrisoners)
+        {
+            prisoner.NotifyDeSelect();
+        }
+        SelectedPrisoners.Clear();
     }
 
     internal void PrisonerHoverStart(Prisoner value)
