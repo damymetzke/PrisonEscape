@@ -50,4 +50,13 @@ public class Prisoner : KinematicBody2D
         _registered = false;
     }
 
+    private void OnClickAreaMouseEnter()
+    {
+        GD.Print("Mouse Enter");
+    }
+
+    private void OnClickAreaMouseExit()
+    {
+        GD.Print("Mouse Exit");
+    }
 }
