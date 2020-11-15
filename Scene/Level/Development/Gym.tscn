@@ -1,3 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scene/Object/Actor/Prisoner.tscn" type="PackedScene" id=1]
 
 [node name="Gym" type="Node2D"]
+
+[node name="Prisoner" parent="." instance=ExtResource( 1 )]
+position = Vector2( 148.978, 116.183 )
+
+[node name="Prisoner2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 597.176, 117.864 )
