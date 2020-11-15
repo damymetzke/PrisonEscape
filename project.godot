@@ -19,6 +19,10 @@ config/name="PrisonEscape"
 run/main_scene="res://Scene/Level/Development/Gym.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PrisonerSelectionManager="*res://Source/CSharp/Autoload/PrisonerSelectionManager.cs"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
