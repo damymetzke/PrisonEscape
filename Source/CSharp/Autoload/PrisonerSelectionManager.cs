@@ -44,18 +44,16 @@ public class PrisonerSelectionManager : Node
             {
                 continue;
             }
-            // TODO: notify prisoner it has been deselected.
+            prisoner.NotifyDeSelect();
         }
         SelectedPrisoners.Clear();
-
-        GD.Print("YEAH!");
 
         if (SelectedPrisoners.Contains(value))
         {
             return;
         }
 
-        // TODO: notify prisoner it has been seleced.
+        value.NotifySelect();
         SelectedPrisoners.Add(value);
     }
 

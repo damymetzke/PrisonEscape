@@ -59,4 +59,13 @@ public class Prisoner : KinematicBody2D
     {
         prisonerSelectionManager.PrisonerHoverEnd(this);
     }
+
+    internal void NotifySelect()
+    {
+        Modulate = new Color(1.0f, 0.5f, 0.5f, 1.0f);
+    }
+    internal void NotifyDeSelect()
+    {
+        Modulate = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
 }
