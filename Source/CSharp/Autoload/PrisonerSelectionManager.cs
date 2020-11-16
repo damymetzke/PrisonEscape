@@ -19,13 +19,20 @@ public class PrisonerSelectionManager : Node
 
         if (Input.IsActionJustPressed("select_prisoner"))
         {
-            if (HoveredPrisoners.Count != 0)
+            if (Input.IsActionPressed("select_multiple_prisoners"))
             {
-                SelectSinglePrisoner(HoveredPrisoners[0]);
+                SelectAdditionalPrisoners(HoveredPrisoners);
             }
             else
             {
-                DeselectAllprisoners();
+                if (HoveredPrisoners.Count != 0)
+                {
+                    SelectSinglePrisoner(HoveredPrisoners[0]);
+                }
+                else
+                {
+                    DeselectAllprisoners();
+                }
             }
         }
     }
@@ -38,6 +45,20 @@ public class PrisonerSelectionManager : Node
     internal void DeRegisterPrisoner(Prisoner value)
     {
         Prisoners.Remove(value);
+    }
+
+    private void SelectAdditionalPrisoners(List<Prisoner> value)
+    {
+        foreach (Prisoner prisoner in value)
+        {
+            if (SelectedPrisoners.Contains(prisoner))
+            {
+                continue;
+            }
+
+            SelectedPrisoners.Add(prisoner);
+            prisoner.NotifySelect();
+        }
     }
 
     private void SelectSinglePrisoner(Prisoner value)
