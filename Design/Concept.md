@@ -12,7 +12,7 @@
 ## Top down control
 
 - [X] I can not switch between prisoners.
-- [ ] I can not select multiple prisoners.
+- [X] I can not select multiple prisoners.
 - [ ] I can not command the selected prisoners.
 - [ ] I can not perform contextual actions.
 - [ ] I can not see which prisoners are selected.
