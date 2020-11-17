@@ -35,6 +35,11 @@ public class PrisonerSelectionManager : Node
                 }
             }
         }
+
+        if (Input.IsActionJustPressed("open_context_menu"))
+        {
+            GD.Print("Opening Context Menu!");
+        }
     }
 
     internal void RegisterPrisoner(Prisoner value)
