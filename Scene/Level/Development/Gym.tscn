@@ -9,3 +9,6 @@ position = Vector2( 148.978, 116.183 )
 
 [node name="Prisoner2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 597.176, 117.864 )
+
+[node name="ContextMenuPosition" type="Node2D" parent="."]
+position = Vector2( 433.901, 274.972 )

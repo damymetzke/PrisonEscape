@@ -4,13 +4,21 @@ using System.Collections.Generic;
 
 public class PrisonerSelectionManager : Node
 {
+    private Node2D ContextMenuPosition;
+
     private List<Prisoner> Prisoners = new List<Prisoner>();
     private List<Prisoner> SelectedPrisoners = new List<Prisoner>();
     private List<Prisoner> HoveredPrisoners = new List<Prisoner>();
 
     public PrisonerSelectionManager()
     {
+    }
 
+    public override void _Ready()
+    {
+        base._Ready();
+
+        ContextMenuPosition = GetNode<Node2D>("/root/Gym/ContextMenuPosition");
     }
 
     public override void _Process(float delta)
@@ -39,7 +47,9 @@ public class PrisonerSelectionManager : Node
         if (Input.IsActionJustPressed("open_context_menu"))
         {
             GD.Print("Opening Context Menu!");
-            GetNode<Node>("/root/Gym").AddChild(ContextMenu.CreateFilledContextMenu(new List<string> { "aaa", "bbb", "ccc" }));
+
+            ContextMenuPosition.Position = GetNode<Node2D>("/root/Gym").GetGlobalMousePosition();
+            ContextMenuPosition.AddChild(ContextMenu.CreateFilledContextMenu(new List<string> { "aaa", "bbb", "ccc" }));
         }
     }
 
