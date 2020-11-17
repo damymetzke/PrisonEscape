@@ -23,13 +23,11 @@ public class ContextMenu : PanelContainer
         }
     }
 
-    internal static ContextMenu CreateFilledContextMenu(List<string> items)
+    internal static ContextMenu CreateContextMenu()
     {
         PackedScene contextMenuScene = GD.Load<PackedScene>("res://Scene/Control/Component/ContextMenu.tscn");
 
         ContextMenu result = (ContextMenu)contextMenuScene.Instance();
-
-        result.Connect("ready", result, "AddItems", new Godot.Collections.Array { items });
 
         return result;
     }

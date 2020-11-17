@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PrisonerSelectionManager : Node
 {
+    private Node2D LevelRoot;
     private Node2D ContextMenuPosition;
 
     private List<Prisoner> Prisoners = new List<Prisoner>();
@@ -18,7 +19,14 @@ public class PrisonerSelectionManager : Node
     {
         base._Ready();
 
-        ContextMenuPosition = GetNode<Node2D>("/root/Gym/ContextMenuPosition");
+        ContextMenuPosition = new Node2D();
+        ContextMenuPosition.AddChild(ContextMenu.CreateContextMenu());
+
+        if (LevelRoot != null)
+        {
+            LevelRoot.AddChild(ContextMenuPosition);
+        }
+
     }
 
     public override void _Process(float delta)
@@ -46,10 +54,7 @@ public class PrisonerSelectionManager : Node
 
         if (Input.IsActionJustPressed("open_context_menu"))
         {
-            GD.Print("Opening Context Menu!");
-
-            ContextMenuPosition.Position = GetNode<Node2D>("/root/Gym").GetGlobalMousePosition();
-            ContextMenuPosition.AddChild(ContextMenu.CreateFilledContextMenu(new List<string> { "aaa", "bbb", "ccc" }));
+            ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
         }
     }
 
@@ -61,6 +66,16 @@ public class PrisonerSelectionManager : Node
     internal void DeRegisterPrisoner(Prisoner value)
     {
         Prisoners.Remove(value);
+    }
+
+    internal void RegisterLevelRoot(Node2D value)
+    {
+        LevelRoot = value;
+
+        if (ContextMenuPosition != null)
+        {
+            LevelRoot.AddChild(ContextMenuPosition);
+        }
     }
 
     private void SelectAdditionalPrisoners(List<Prisoner> value)
