@@ -1,9 +1,30 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="ContextMenu" type="Panel"]
+[ext_resource path="res://Source/CSharp/Control/Component/ContextMenu.cs" type="Script" id=1]
+
+[node name="ContextMenu" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackGround" type="Panel" parent="."]
+visible = false
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ContextItems" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -39,6 +39,7 @@ public class PrisonerSelectionManager : Node
         if (Input.IsActionJustPressed("open_context_menu"))
         {
             GD.Print("Opening Context Menu!");
+            GetNode<Node>("/root/Gym").AddChild(ContextMenu.CreateFilledContextMenu(new List<string> { "aaa", "bbb", "ccc" }));
         }
     }
 
