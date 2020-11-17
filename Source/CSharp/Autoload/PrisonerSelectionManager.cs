@@ -22,6 +22,7 @@ public class PrisonerSelectionManager : Node
 
         ContextMenuPosition = new Node2D();
         ContextMenu = ContextMenu.CreateContextMenu();
+        ContextMenu.Visible = false;
         ContextMenuPosition.AddChild(ContextMenu);
 
         if (LevelRoot != null)
@@ -52,10 +53,13 @@ public class PrisonerSelectionManager : Node
                     DeselectAllprisoners();
                 }
             }
+
+            ContextMenu.Visible = false;
         }
 
         if (Input.IsActionJustPressed("open_context_menu"))
         {
+            ContextMenu.Visible = true;
             ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
             ContextMenu.SetItems(new List<string> { "aaa", "bbb", "ccc" });
         }
