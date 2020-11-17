@@ -23,6 +23,20 @@ public class ContextMenu : PanelContainer
         }
     }
 
+    internal void ClearItems()
+    {
+        foreach (Node child in ContextItems.GetChildren())
+        {
+            ContextItems.RemoveChild(child);
+        }
+    }
+
+    internal void SetItems(List<string> items)
+    {
+        ClearItems();
+        AddItems(items);
+    }
+
     internal static ContextMenu CreateContextMenu()
     {
         PackedScene contextMenuScene = GD.Load<PackedScene>("res://Scene/Control/Component/ContextMenu.tscn");

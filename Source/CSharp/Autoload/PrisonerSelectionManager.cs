@@ -6,6 +6,7 @@ public class PrisonerSelectionManager : Node
 {
     private Node2D LevelRoot;
     private Node2D ContextMenuPosition;
+    private ContextMenu ContextMenu;
 
     private List<Prisoner> Prisoners = new List<Prisoner>();
     private List<Prisoner> SelectedPrisoners = new List<Prisoner>();
@@ -20,7 +21,8 @@ public class PrisonerSelectionManager : Node
         base._Ready();
 
         ContextMenuPosition = new Node2D();
-        ContextMenuPosition.AddChild(ContextMenu.CreateContextMenu());
+        ContextMenu = ContextMenu.CreateContextMenu();
+        ContextMenuPosition.AddChild(ContextMenu);
 
         if (LevelRoot != null)
         {
@@ -55,6 +57,7 @@ public class PrisonerSelectionManager : Node
         if (Input.IsActionJustPressed("open_context_menu"))
         {
             ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
+            ContextMenu.SetItems(new List<string> { "aaa", "bbb", "ccc" });
         }
     }
 
