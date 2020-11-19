@@ -4,6 +4,18 @@ using System.Collections.Generic;
 
 public class ContextMenu : PanelContainer
 {
+    internal struct Item
+    {
+        internal string Title;
+        internal Action OnClick;
+
+        internal Item(string title, Action onClick)
+        {
+            Title = title;
+            OnClick = onClick;
+        }
+    }
+
     private VBoxContainer ContextItems;
 
     public override void _Ready()
@@ -13,12 +25,12 @@ public class ContextMenu : PanelContainer
         ContextItems = GetNode<VBoxContainer>("ContextItems");
     }
 
-    internal void AddItems(List<string> items)
+    internal void AddItems(List<Item> items)
     {
-        foreach (string item in items)
+        foreach (Item item in items)
         {
             var newLabel = new Label();
-            newLabel.Text = item;
+            newLabel.Text = item.Title;
             ContextItems.AddChild(newLabel);
         }
     }
@@ -31,7 +43,7 @@ public class ContextMenu : PanelContainer
         }
     }
 
-    internal void SetItems(List<string> items)
+    internal void SetItems(List<Item> items)
     {
         ClearItems();
         AddItems(items);

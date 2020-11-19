@@ -61,7 +61,11 @@ public class PrisonerSelectionManager : Node
         {
             ContextMenu.Visible = true;
             ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
-            ContextMenu.SetItems(new List<string> { "aaa", "bbb", "ccc" });
+            ContextMenu.SetItems(new List<ContextMenu.Item> {
+                new ContextMenu.Item("aaa", () => { GD.Print("AAA"); }),
+                new ContextMenu.Item("bbb", () => { GD.Print("BBB"); }),
+                new ContextMenu.Item("ccc", () => { GD.Print("CCC"); })
+            });
         }
     }
 
