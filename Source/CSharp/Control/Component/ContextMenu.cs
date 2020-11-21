@@ -16,6 +16,8 @@ public class ContextMenu : PanelContainer
         }
     }
 
+    private List<Action> Callbacks = new List<Action>();
+
     private VBoxContainer ContextItems;
 
     public override void _Ready()
@@ -31,7 +33,27 @@ public class ContextMenu : PanelContainer
         {
             var newLabel = new Label();
             newLabel.Text = item.Title;
+
+            newLabel.MouseFilter = MouseFilterEnum.Stop;
+
             ContextItems.AddChild(newLabel);
+
+            Godot.Collections.Array bindArray = new Godot.Collections.Array { Callbacks.Count };
+
+            newLabel.Connect(
+                "mouse_entered",
+                this,
+                "OnItemHoverStart",
+                bindArray
+                );
+            newLabel.Connect(
+                "mouse_exited",
+                this,
+                "OnItemHoverEnd",
+                bindArray
+                );
+
+            Callbacks.Add(item.OnClick);
         }
     }
 
@@ -39,8 +61,11 @@ public class ContextMenu : PanelContainer
     {
         foreach (Node child in ContextItems.GetChildren())
         {
+            GD.Print(child.GetSignalConnectionList("mouse_exited"));
             ContextItems.RemoveChild(child);
         }
+
+        Callbacks.Clear();
     }
 
     internal void SetItems(List<Item> items)
@@ -56,5 +81,15 @@ public class ContextMenu : PanelContainer
         ContextMenu result = (ContextMenu)contextMenuScene.Instance();
 
         return result;
+    }
+
+    private void OnItemHoverStart(int index)
+    {
+        GD.Print($"START {index}");
+    }
+
+    private void OnItemHoverEnd(int index)
+    {
+        GD.Print($"END {index}");
     }
 }
