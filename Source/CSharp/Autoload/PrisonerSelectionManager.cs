@@ -38,23 +38,26 @@ public class PrisonerSelectionManager : Node
 
         if (Input.IsActionJustPressed("select_prisoner"))
         {
-            if (Input.IsActionPressed("select_multiple_prisoners"))
+            if (!ContextMenu.HandleInput())
             {
-                SelectAdditionalPrisoners(HoveredPrisoners);
-            }
-            else
-            {
-                if (HoveredPrisoners.Count != 0)
+                if (Input.IsActionPressed("select_multiple_prisoners"))
                 {
-                    SelectSinglePrisoner(HoveredPrisoners[0]);
+                    SelectAdditionalPrisoners(HoveredPrisoners);
                 }
                 else
                 {
-                    DeselectAllprisoners();
+                    if (HoveredPrisoners.Count != 0)
+                    {
+                        SelectSinglePrisoner(HoveredPrisoners[0]);
+                    }
+                    else
+                    {
+                        DeselectAllprisoners();
+                    }
                 }
-            }
 
-            ContextMenu.Visible = false;
+                ContextMenu.Visible = false;
+            }
         }
 
         if (Input.IsActionJustPressed("open_context_menu"))

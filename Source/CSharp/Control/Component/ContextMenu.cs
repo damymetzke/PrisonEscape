@@ -20,6 +20,8 @@ public class ContextMenu : PanelContainer
 
     private VBoxContainer ContextItems;
 
+    private int HoveredItem = -1;
+
     public override void _Ready()
     {
         base._Ready();
@@ -61,17 +63,29 @@ public class ContextMenu : PanelContainer
     {
         foreach (Node child in ContextItems.GetChildren())
         {
-            GD.Print(child.GetSignalConnectionList("mouse_exited"));
             ContextItems.RemoveChild(child);
         }
 
         Callbacks.Clear();
+        HoveredItem = -1;
     }
 
     internal void SetItems(List<Item> items)
     {
         ClearItems();
         AddItems(items);
+    }
+
+    internal bool HandleInput()
+    {
+        if (HoveredItem == -1)
+        {
+            return false;
+        }
+
+        Callbacks[HoveredItem]();
+
+        return true;
     }
 
     internal static ContextMenu CreateContextMenu()
@@ -85,11 +99,14 @@ public class ContextMenu : PanelContainer
 
     private void OnItemHoverStart(int index)
     {
-        GD.Print($"START {index}");
+        HoveredItem = index;
     }
 
     private void OnItemHoverEnd(int index)
     {
-        GD.Print($"END {index}");
+        if (HoveredItem == index)
+        {
+            HoveredItem = -1;
+        }
     }
 }
