@@ -18,6 +18,10 @@ internal class PlayerIntentList<T> : IPlayerIntentHandler<T>
     internal PlayerIntentList(int size)
     {
         Handlers = new List<IPlayerIntentHandler<T>>(size);
+        for (int i = 0; i < size; ++i)
+        {
+            Handlers.Add(new NullIntent<T>());
+        }
     }
 
     internal PlayerIntentList(List<IPlayerIntentHandler<T>> handlers)

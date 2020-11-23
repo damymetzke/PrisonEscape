@@ -12,6 +12,8 @@ public class PrisonerSelectionManager : Node
     private List<Prisoner> SelectedPrisoners = new List<Prisoner>();
     private List<Prisoner> HoveredPrisoners = new List<Prisoner>();
 
+    private PlayerIntentList<GameplayIntent> IntentList = new PlayerIntentList<GameplayIntent>(1);
+
     public PrisonerSelectionManager()
     {
     }
@@ -30,45 +32,76 @@ public class PrisonerSelectionManager : Node
             LevelRoot.AddChild(ContextMenuPosition);
         }
 
+        IntentList[0] = ContextMenu;
+
     }
 
     public override void _Process(float delta)
     {
         base._Process(delta);
 
-        if (Input.IsActionJustPressed("select_prisoner"))
+        string[] actions = {
+            "select_prisoner",
+            "open_context_menu",
+            "select_multiple_prisoners"
+        };
+
+        GameplayIntent[] intents = {
+            GameplayIntent.PrimaryAction,
+            GameplayIntent.SecondaryAction,
+            GameplayIntent.MultipleSelect
+        };
+
+        for (int i = 0; i < 3; ++i)
         {
-            if (!ContextMenu.HandleInput())
+            if (Input.IsActionJustPressed(actions[i]))
             {
-                if (Input.IsActionPressed("select_multiple_prisoners"))
+                PlayerIntent<GameplayIntent> intent = new PlayerIntent<GameplayIntent>(
+                            intents[i],
+                            PlayerIntent<GameplayIntent>.ActionType.Pressed,
+                            new Dictionary<GameplayIntent, bool>{
+                                {GameplayIntent.PrimaryAction, Input.IsActionPressed("select_prisoner")},
+                                {GameplayIntent.SecondaryAction, Input.IsActionPressed("open_context_menu")},
+                                {GameplayIntent.MultipleSelect, Input.IsActionPressed("select_multiple_prisoners")}
+                            }
+                        );
+                if (IntentList.ResolveIntent(intent))
                 {
-                    SelectAdditionalPrisoners(HoveredPrisoners);
+                    break;
                 }
-                else
+
+                if (Input.IsActionJustPressed("select_prisoner"))
                 {
-                    if (HoveredPrisoners.Count != 0)
+                    if (Input.IsActionPressed("select_multiple_prisoners"))
                     {
-                        SelectSinglePrisoner(HoveredPrisoners[0]);
+                        SelectAdditionalPrisoners(HoveredPrisoners);
                     }
                     else
                     {
-                        DeselectAllprisoners();
+                        if (HoveredPrisoners.Count != 0)
+                        {
+                            SelectSinglePrisoner(HoveredPrisoners[0]);
+                        }
+                        else
+                        {
+                            DeselectAllprisoners();
+                        }
                     }
+
+                    ContextMenu.Visible = false;
                 }
 
-                ContextMenu.Visible = false;
+                if (Input.IsActionJustPressed("open_context_menu"))
+                {
+                    ContextMenu.Visible = true;
+                    ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
+                    ContextMenu.SetItems(new List<ContextMenu.Item> {
+                        new ContextMenu.Item("Guard Area", () => { GD.Print("Guarding Area..."); }),
+                        new ContextMenu.Item("Hide Contraband", () => { GD.Print("Hiding Contraband..."); }),
+                        new ContextMenu.Item("Dig Tunnel", () => { GD.Print("Digging Tunnel..."); })
+                    });
+                }
             }
-        }
-
-        if (Input.IsActionJustPressed("open_context_menu"))
-        {
-            ContextMenu.Visible = true;
-            ContextMenuPosition.Position = LevelRoot.GetGlobalMousePosition();
-            ContextMenu.SetItems(new List<ContextMenu.Item> {
-                new ContextMenu.Item("Guard Area", () => { GD.Print("Guarding Area..."); }),
-                new ContextMenu.Item("Hide Contraband", () => { GD.Print("Hiding Contraband..."); }),
-                new ContextMenu.Item("Dig Tunnel", () => { GD.Print("Digging Tunnel..."); })
-            });
         }
     }
 
