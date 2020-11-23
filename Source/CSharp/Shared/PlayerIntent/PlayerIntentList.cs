@@ -30,11 +30,11 @@ internal class PlayerIntentList<T> : IPlayerIntentHandler<T>
         Handlers = (List<IPlayerIntentHandler<T>>)handlers;
     }
 
-    public bool HandleIntent(PlayerIntent<T> intent)
+    public bool ResolveIntent(PlayerIntent<T> intent)
     {
         for (int i = 0; i < Handlers.Count; ++i)
         {
-            if (Handlers[i].HandleIntent(intent))
+            if (Handlers[i].ResolveIntent(intent))
             {
                 return true;
             }
