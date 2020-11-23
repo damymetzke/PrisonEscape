@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class ContextMenu : PanelContainer
+public class ContextMenu : PanelContainer, IPlayerIntentHandler<GameplayIntent>
 {
     internal struct Item
     {
@@ -79,6 +79,18 @@ public class ContextMenu : PanelContainer
     internal bool HandleInput()
     {
         if (HoveredItem == -1)
+        {
+            return false;
+        }
+
+        Callbacks[HoveredItem]();
+
+        return true;
+    }
+
+    public bool ResolveIntent(PlayerIntent<GameplayIntent> intent)
+    {
+        if (intent.Action != GameplayIntent.PrimaryAction || HoveredItem == -1)
         {
             return false;
         }

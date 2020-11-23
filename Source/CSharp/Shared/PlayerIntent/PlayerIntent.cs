@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-internal struct PlayerIntent<T>
+public struct PlayerIntent<T>
 {
     internal enum ActionType
     {
